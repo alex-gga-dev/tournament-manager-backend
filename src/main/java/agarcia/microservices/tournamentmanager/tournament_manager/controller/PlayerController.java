@@ -37,7 +37,7 @@ public class PlayerController {
         if (playerOptional.isPresent()) {
             return ResponseEntity.ok(playerOptional.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player with ID" + id + " not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player with ID: " + id + " not found.");
         }
     }
 
