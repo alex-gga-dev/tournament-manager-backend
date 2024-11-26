@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.PlayerDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Player;
+import agarcia.microservices.tournamentmanager.tournament_manager.entities.enums.Position;
 import agarcia.microservices.tournamentmanager.tournament_manager.service.PlayerService;
 import jakarta.validation.Valid;
 
@@ -39,17 +41,6 @@ public class PlayerController {
         }
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<?> getByName(@PathVariable String name) {
-        Player player = playerService.getByName(name);
-
-        if (player != null) {
-            return ResponseEntity.ok(player);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player with Name" + name + " not found");
-        }
-    }
-
     @PostMapping()
     public ResponseEntity<?> save(@Valid @RequestBody PlayerDTO playerDto) {
         PlayerDTO createdPlayer = playerService.save(playerDto);
@@ -66,6 +57,18 @@ public class PlayerController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         playerService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filters")
+    public ResponseEntity<?> findByFilter(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) Position position,
+            @RequestParam(required = false) Long teamId) {
+        List<Player> players = playerService.findByFilter(firstName, lastName, position, teamId);
+        ResponseEntity<?> result = (players == null || players.isEmpty() ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(players));
+        return result;
     }
 
     @GetMapping("/all")

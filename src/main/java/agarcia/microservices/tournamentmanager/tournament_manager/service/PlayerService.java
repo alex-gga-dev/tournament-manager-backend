@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.PlayerDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Player;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Team;
+import agarcia.microservices.tournamentmanager.tournament_manager.entities.enums.Position;
 import agarcia.microservices.tournamentmanager.tournament_manager.exceptions.NoDataFoundException;
 import agarcia.microservices.tournamentmanager.tournament_manager.repository.PlayerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,13 +29,6 @@ public class PlayerService {
         return playerRepository.findById(id);
     }
 
-    public Player getByName(String name) {
-        return playerRepository.findByFirstName(name)
-                .orElseThrow(() -> new NoDataFoundException(
-                        "Player with name " + name + " not found"));
-
-    }
-
     public PlayerDTO save(PlayerDTO playerDto) {
 
         validateDuplicatePlayer(playerDto);
@@ -51,12 +45,11 @@ public class PlayerService {
     }
 
     public PlayerDTO update(Long id, Player player) {
-        // Buscar el jugador a actualizar
+
         Player playerToUpdate = playerRepository.findById(id)
                 .orElseThrow(() -> new NoDataFoundException(
                         "Player with ID " + id + " not found"));
 
-        // Actualizar solo los campos enviados (no nulos)
         if (player.getFirstName() != null) {
             playerToUpdate.setFirstName(player.getFirstName());
         }
@@ -102,6 +95,16 @@ public class PlayerService {
 
     public List<Player> getPlayers() {
         List<Player> players = playerRepository.findAll();
+        return players;
+    }
+
+    public List<Player> findByFilter(
+            String firstName,
+            String lastName,
+            Position position,
+            Long teamId) {
+        List<Player> players = playerRepository.findByFilter(
+                firstName, lastName, position, teamId);
         return players;
     }
 
