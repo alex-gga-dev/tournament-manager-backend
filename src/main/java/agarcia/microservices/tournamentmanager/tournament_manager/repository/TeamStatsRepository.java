@@ -12,4 +12,6 @@ public interface TeamStatsRepository extends JpaRepository<TeamStats, Long> {
 
     List<TeamStats> findByTeamAndTournament(Team team, Tournament tournament);
 
+    List<TeamStats> findByTournament(Tournament tournament);
+
 }
