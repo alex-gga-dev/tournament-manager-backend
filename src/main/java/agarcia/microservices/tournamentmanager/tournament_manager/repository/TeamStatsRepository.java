@@ -14,4 +14,6 @@ public interface TeamStatsRepository extends JpaRepository<TeamStats, Long> {
 
     List<TeamStats> findByTournament(Tournament tournament);
 
+    boolean existsByTeamAndTournament(Team team, Tournament tournament);
+
 }

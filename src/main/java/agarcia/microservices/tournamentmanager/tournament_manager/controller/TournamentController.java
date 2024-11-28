@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamInTournamentDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TournamentDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Tournament;
 import agarcia.microservices.tournamentmanager.tournament_manager.service.TournamentService;
@@ -50,7 +51,7 @@ public class TournamentController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        List<Tournament> tournaments = tournamentService.findByFilter(name, startDate, endDate);
+        List<TournamentDTO> tournaments = tournamentService.findByFilter(name, startDate, endDate);
         ResponseEntity<?> result = (tournaments == null || tournaments.isEmpty() ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(tournaments));
         return result;
@@ -58,10 +59,17 @@ public class TournamentController {
 
     @GetMapping("/all")
     public ResponseEntity<?> findAll() {
-        List<Tournament> tournaments = tournamentService.findAll();
+        List<TournamentDTO> tournaments = tournamentService.findAll();
         ResponseEntity<?> result = (tournaments == null || tournaments.isEmpty() ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(tournaments));
         return result;
+    }
+
+    @PostMapping("/{tournamentId}/team/{teamId}")
+    public ResponseEntity<?> addTeamToTournament(@PathVariable Long tournamentId,
+            @PathVariable Long teamId) {
+        TeamInTournamentDTO updatedTournament = tournamentService.addTeamToTournament(tournamentId, teamId);
+        return ResponseEntity.ok(updatedTournament);
     }
 
 }

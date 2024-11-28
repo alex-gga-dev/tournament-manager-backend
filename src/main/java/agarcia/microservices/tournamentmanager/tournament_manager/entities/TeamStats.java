@@ -1,5 +1,7 @@
 package agarcia.microservices.tournamentmanager.tournament_manager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class TeamStats {
 
     @ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
+    @JsonIgnore
     private Tournament tournament;
 
     @Column(name = "goals_for")
