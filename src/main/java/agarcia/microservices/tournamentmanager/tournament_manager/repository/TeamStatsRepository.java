@@ -10,7 +10,7 @@ import agarcia.microservices.tournamentmanager.tournament_manager.entities.Tourn
 
 public interface TeamStatsRepository extends JpaRepository<TeamStats, Long> {
 
-    List<TeamStats> findByTeamAndTournament(Team team, Tournament tournament);
+    TeamStats findByTeamAndTournament(Team team, Tournament tournament);
 
     List<TeamStats> findByTournament(Tournament tournament);
 

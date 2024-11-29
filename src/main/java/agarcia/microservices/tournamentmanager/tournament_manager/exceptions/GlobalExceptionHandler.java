@@ -45,21 +45,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Invalid request payload" + ex.getMessage());
-
-        Throwable cause = ex.getCause();
-        if (cause instanceof InvalidFormatException) {
-            errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,
-                    "Invalid value provided for enum. Please use one of: "
-                            + Arrays.toString(Position.values()));
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
