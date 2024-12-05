@@ -64,6 +64,8 @@ public class GameService {
         Team homeTeam = game.getHomeTeam();
         Team awayTeam = game.getAwayTeam();
 
+        System.out.println("Home team: " + homeTeam + ", Away team: " + awayTeam);
+
         TeamStats homeStats = teamStatsRepository.findByTeamAndTournament(homeTeam, tournament);
         TeamStats awayStats = teamStatsRepository.findByTeamAndTournament(awayTeam, tournament);
 
@@ -84,7 +86,7 @@ public class GameService {
             homeStats.setLosses(homeStats.getLosses() + 1);
         } else {
             homeStats.setDraws(homeStats.getDraws() + 1);
-            awayStats.setDraws(homeStats.getDraws() + 1);
+            awayStats.setDraws(awayStats.getDraws() + 1);
         }
 
         teamStatsRepository.save(homeStats);
@@ -94,7 +96,7 @@ public class GameService {
 
     public Game mapToGameEntity(GameDTO gameDTO) {
         Game game = new Game();
-        System.out.println(gameDTO.tournamentId());
+        System.out.println(gameDTO);
 
         Tournament tournament = tournamentRepository.findById(gameDTO.tournamentId())
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -103,14 +105,14 @@ public class GameService {
         Team homeTeam = teamRepository.findById(gameDTO.homeTeamId()).orElseThrow(
                 () -> new EntityNotFoundException("Home Team with ID " + gameDTO.homeTeamId() + " does not exist."));
 
-        Team awayTeam = teamRepository.findById(gameDTO.homeTeamId()).orElseThrow(
+        Team awayTeam = teamRepository.findById(gameDTO.awayTeamId()).orElseThrow(
                 () -> new EntityNotFoundException("Away Team with ID " + gameDTO.awayTeamId() + " does not exist."));
 
         game.setTournament(tournament);
         game.setHomeTeam(homeTeam);
         game.setAwayTeam(awayTeam);
         game.setHomeGoals(gameDTO.homeGoals());
-        game.setHomeGoals(gameDTO.awayGoals());
+        game.setAwayGoals(gameDTO.awayGoals());
         game.setDate(gameDTO.date());
         game.setLocation(gameDTO.location());
 
