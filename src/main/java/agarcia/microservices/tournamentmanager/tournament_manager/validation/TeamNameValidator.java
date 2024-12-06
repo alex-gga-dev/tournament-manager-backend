@@ -3,7 +3,7 @@ package agarcia.microservices.tournamentmanager.tournament_manager.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class PlayerNameValidator implements ConstraintValidator<ValidPlayerName, String> {
+public class TeamNameValidator implements ConstraintValidator<ValidTeamName, String> {
 
     private static final String NAME_PATTERN = "^[a-zA-ZÀ-ÖØ-öø-ÿ\\s]+$";
 

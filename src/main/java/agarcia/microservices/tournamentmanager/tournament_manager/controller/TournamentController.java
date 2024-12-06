@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamInTournamentDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TournamentDTO;
+import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TournamentSavedDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Tournament;
 import agarcia.microservices.tournamentmanager.tournament_manager.service.TournamentService;
 
@@ -29,8 +30,8 @@ public class TournamentController {
     private TournamentService tournamentService;
 
     @PostMapping()
-    public ResponseEntity<?> save(@RequestBody TournamentDTO tournamentDTO) {
-        TournamentDTO createdTournament = tournamentService.save(tournamentDTO);
+    public ResponseEntity<?> save(@RequestBody TournamentSavedDTO tournamentDTO) {
+        TournamentSavedDTO createdTournament = tournamentService.save(tournamentDTO);
         return ResponseEntity.ok(createdTournament);
 
     }

@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -24,7 +25,7 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "start_date")
@@ -35,6 +36,7 @@ public class Tournament {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
+    @NotNull
     private TournamentStatus status;
 
     @Column(name = "points_for_win")

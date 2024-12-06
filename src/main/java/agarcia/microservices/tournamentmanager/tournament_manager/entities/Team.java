@@ -1,5 +1,6 @@
 package agarcia.microservices.tournamentmanager.tournament_manager.entities;
 
+import agarcia.microservices.tournamentmanager.tournament_manager.validation.ValidTeamName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ValidTeamName
     @Column(name = "name", unique = true)
     private String name;
 

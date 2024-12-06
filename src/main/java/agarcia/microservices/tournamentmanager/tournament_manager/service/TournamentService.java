@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamInTournamentDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TournamentDTO;
+import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TournamentSavedDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamStatsDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Team;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.TeamStats;
@@ -35,7 +36,7 @@ public class TournamentService {
         this.teamStatsRepository = teamStatsRepository;
     }
 
-    public TournamentDTO save(TournamentDTO tournamentDTO) {
+    public TournamentSavedDTO save(TournamentSavedDTO tournamentDTO) {
 
         Tournament tournament = mapToTournamentEntity(tournamentDTO);
 
@@ -87,11 +88,12 @@ public class TournamentService {
 
     }
 
-    public Tournament mapToTournamentEntity(TournamentDTO tournamentDTO) {
+    public Tournament mapToTournamentEntity(TournamentSavedDTO tournamentDTO) {
         Tournament tournament = new Tournament();
         tournament.setName(tournamentDTO.name());
         tournament.setStartDate(tournamentDTO.startDate());
         tournament.setEndDate(tournamentDTO.endDate());
+        tournament.setStatus(tournamentDTO.status());
         return tournament;
     }
 

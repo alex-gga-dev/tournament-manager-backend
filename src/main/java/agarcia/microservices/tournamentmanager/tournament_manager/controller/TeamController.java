@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import agarcia.microservices.tournamentmanager.tournament_manager.dtos.TeamDTO;
 import agarcia.microservices.tournamentmanager.tournament_manager.entities.Team;
 import agarcia.microservices.tournamentmanager.tournament_manager.service.TeamService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,7 @@ public class TeamController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> save(@RequestBody TeamDTO teamDTO) {
+    public ResponseEntity<?> save(@Valid @RequestBody TeamDTO teamDTO) {
         TeamDTO createdTeam = teamService.save(teamDTO);
         return ResponseEntity.ok(createdTeam);
     }

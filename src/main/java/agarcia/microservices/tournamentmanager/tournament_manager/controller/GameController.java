@@ -46,8 +46,8 @@ public class GameController {
 
     @GetMapping("/dates")
     public ResponseEntity<?> getBetweenDates(
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         List<Game> games = gameService.getBetweenDates(startDate, endDate);
         return ResponseEntity.ok(games);
     }

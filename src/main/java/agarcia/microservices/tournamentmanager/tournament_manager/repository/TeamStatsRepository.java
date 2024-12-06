@@ -1,6 +1,7 @@
 package agarcia.microservices.tournamentmanager.tournament_manager.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,7 +11,7 @@ import agarcia.microservices.tournamentmanager.tournament_manager.entities.Tourn
 
 public interface TeamStatsRepository extends JpaRepository<TeamStats, Long> {
 
-    TeamStats findByTeamAndTournament(Team team, Tournament tournament);
+    Optional<TeamStats> findByTeamAndTournament(Team team, Tournament tournament);
 
     List<TeamStats> findByTournament(Tournament tournament);
 
